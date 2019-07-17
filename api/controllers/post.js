@@ -1,3 +1,5 @@
+const Post = require('../models/Post')
+
 //get all posts from database 
 exports.getPosts=(req,res,next)=>{
     res.status(200).json({
@@ -10,20 +12,34 @@ exports.getPost=(req,res,next)=>{
     console.log('searching...')
 }
 
-//user creates post 
+//user creates post ******NOTE WHEN MAKING FRONT END, MAKE SURE U CONVERT TITLE AND CAPTION INTO JSON (stringify) ATTACH IT TO THE FORM DATA
 exports.postPost=(req,res,next)=>{
-    const postName = req.body.name; //should be Json 
-    if(postName){
-        res.status(201).json({
-            message: 'item recieved by server',
-            postName: postName
-        })
+    if(!req.file){
+        const error = new Error('No image provided')
+        error.status(422); 
+        throw error; 
     }
-    // //no post inputted by user
-    // else{
-    //     const error = new Error('please enter data')
-    //     error.status(404); 
-    //     next(error)
-    // }
-    
+
+    console.log('title is ', req.body.title); 
+
+    //audio path is stored in req.file path
+    const title = req.body.title;
+    const caption = req.body.caption;
+    const audioLink = req.file.path;  
+
+    //VALIDATION HANDLING WILL EXIST HERE 
+
+    const newPost = new Post(title, caption, audioLink)
+    newPost.save()
+    .then(result=>{
+        res.status(201).json({
+            message: 'item is created and stored in the database',
+            item: result
+        })
+    })
+    .catch(err=>{ //find out how to extract message from this 'err' object 
+        const error = new Error('Error with saving item into database')
+        error.status(404); 
+        next(error)
+    })
 }

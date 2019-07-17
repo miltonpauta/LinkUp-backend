@@ -2,18 +2,33 @@ const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
 const DatabaseConnect = require('./utils/database').mongoConnect; 
+const multer = require('multer'); 
 
-const app = express()
+const app = express();
 const morgan = require('morgan'); 
-
-//import routes
-const HomepageRoutes = require('./api/routes/main');
-const AuthRoutes = require('./api/routes/auth'); 
+//specify the storage yourself! 
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb)=>{
+        cb(null, 'music-files')
+    },
+    filename: (req,file,cb)=>{
+        cb(null, new Date().toISOString() + '-' + file.originalname) //original name is orginal name of file uploaded 
+    }
+})
+const fileFilter = (req, file, cb)=>{
+    if(file.mimetype === 'audio/mpeg'){
+        cb(null, true)
+    }
+    else{
+        cb(null, false)
+    }
+}
 
 //use morgan 
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({extended:false})); 
+app.use(bodyParser.urlencoded({extended:true})); 
 app.use(bodyParser.json());
+app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('audio')); //make sure in front end, input name ="audio"
 
 //handleCORS 
 app.use((req,res,next)=>{
@@ -26,6 +41,10 @@ app.use((req,res,next)=>{
     }
     next(); 
 })
+
+//import routes
+const HomepageRoutes = require('./api/routes/main');
+const AuthRoutes = require('./api/routes/auth'); 
 
 app.use('/posts', HomepageRoutes); 
 
