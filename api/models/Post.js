@@ -18,19 +18,18 @@ class Post {
         })
     }
 
-    //make a function that finds a user with a id
-    // static findById(id){
-    //     const db = getDb();
-    //     return db.collection('users')
-    //     .find({_id: new mongo.ObjectId(id)})
-    //     .next()
-    //     .then(foundUser=>{
-    //         return foundUser; 
-    //     })
-    //     .catch(err=>{
-    //         console.log(err); 
-    //     })
-    // }
+    static findById(id){
+        const db = getDb();
+        return db.collection('posts')
+        .find({_id: new mongo.ObjectId(id)})
+        .next()
+        .then(foundUser=>{
+            return foundUser; 
+        })
+        .catch(err=>{
+            console.log(err);  
+        })
+    }
 }
 
 module.exports = Post; 

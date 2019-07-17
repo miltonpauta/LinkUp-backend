@@ -7,9 +7,28 @@ exports.getPosts=(req,res,next)=>{
     })
 }
 
-//fetch post that belongs to user 
+//fetch post that belongs to user, fetch id from param  
 exports.getPost=(req,res,next)=>{
-    console.log('searching...')
+    const productId = req.params.postId; 
+
+    Post.findById(productId)
+    .then(result=>{
+        console.log(result)
+        res.status(200).json({
+            message: `Post with ID#${productId} was fetched.`,
+            postData: {
+                title: result.title,
+                caption: result.caption,
+                audioSrc: result.audioSrc,
+                timeCreated: result.timeCreated
+            }
+        })
+    })
+    .catch(err=>{
+        const error = new Error('Error with retriving post from database.')
+        error.status(404); 
+        next(error)
+    })
 }
 
 //user creates post ******NOTE WHEN MAKING FRONT END, MAKE SURE U CONVERT TITLE AND CAPTION INTO JSON (stringify) ATTACH IT TO THE FORM DATA
