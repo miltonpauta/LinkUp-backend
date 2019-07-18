@@ -8,9 +8,9 @@ const AuthController = require('../controllers/auth')
 router.post('/login', AuthController.postLogin); 
 
 //sign up 
-router.post('/signup', AuthController.postSignup); 
+router.post('/register', AuthController.postRegister); 
 
 //sign out 
-router.post('/signout', AuthController.postSignout); 
+router.post('/logout', AuthController.postLogout); 
 
 module.exports = router; 

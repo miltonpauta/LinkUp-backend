@@ -3,15 +3,12 @@ exports.postLogin=(req,res,next)=>{
 
 }
 
-//get info from user 
-exports.getSignup = (req,res,next)=>{
-
-
-}
-exports.postSignup = (req, res, next)=>{
-    
+exports.postRegister = (req, res, next)=>{
+    res.status(200).json({
+        message: 'success'
+    }); 
 }
 
-exports.postSignout = (req, res, next)=>{
+exports.postLogout = (req, res, next)=>{
     
 }
