@@ -3,6 +3,7 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const DatabaseConnect = require('./utils/database').mongoConnect; 
 const multer = require('multer'); 
+const config = require('./config'); 
 
 const app = express();
 const morgan = require('morgan'); 
@@ -68,5 +69,7 @@ app.use((error, req, res, next)=>{
 })
 
 DatabaseConnect(()=>{
-    app.listen(3000); 
+    app.listen(config.port, ()=>{
+        console.log(`Server running on port ${config.port}`)
+    });  
 }) 
