@@ -30,6 +30,20 @@ class Post {
             console.log(err);  
         })
     }
+
+    //make a query that retrieves all posts from collection 
+    static fetchAllPosts(){
+        const db = getDb();
+        return db.collection('posts').find()
+        .toArray() 
+        .then(allPosts=>{
+            return allPosts;  
+        })
+        .catch(err=>{
+            console.log(err);  
+        })
+    }
+
 }
 
 module.exports = Post; 

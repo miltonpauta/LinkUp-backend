@@ -1,9 +1,19 @@
 const Post = require('../models/Post')
 
 //get all posts from database 
-exports.getPosts=(req,res,next)=>{
-    res.status(200).json({
-        message: 'this is all the posts in database '
+exports.getAllPosts=(req,res,next)=>{
+    Post.fetchAllPosts()
+    .then(results=>{
+        console.log(results); 
+        res.status(200).json({
+            message: 'All posts fetched successfully',
+            allPosts:results //results is an array of all posts 
+        })
+    })
+    .catch(err=>{
+        const error = new Error('Error with retriving all posts from database.')
+        error.status(404); 
+        next(error)
     })
 }
 
@@ -61,4 +71,17 @@ exports.postPost=(req,res,next)=>{
         error.status(404); 
         next(error)
     })
+}
+
+exports.editPost=(req,res,next)=>{
+    //make sure this post belongs to the session user
+    console.log('here is where one edits a post with user id provided') 
+
+    //Step 1: find post by Id 
+    //Step: 2 see if user id matches with this post Id 
+    //Step 3: get all values from form 
+    //Step 4: make a new Post Instance out of em 
+    //Step 5: See if audio is same or not, if not then delete current file in local dir and replace. If not, then dont edit anything 
+    //Step 6: delete current item in db and insert this, OR do a update query with all values in it  
+
 }

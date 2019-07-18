@@ -1,7 +1,6 @@
-CREATING A POST (schema right now till further development)
-    - _ID (made by mongodb already)
-    - POST TITLE
-    - SONG MP3 FILE (or WAV file!); 
-    - CAPTION 
-    - TIME CREATED 
-    - _USERID (who made this post)  <=== will be implemented last 
+POST: 
+    -create (C)
+    -edit
+    -delete 
+    -fetch all posts (C)
+    -fetch one post (to see more details) (C)
