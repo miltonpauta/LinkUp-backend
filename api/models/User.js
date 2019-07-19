@@ -29,6 +29,19 @@ class User {
         })
     }
 
+    static findUserByEmail(email){
+        console.log('email being sent to query', email); 
+        const db = getDb();
+        return db.collection('users')
+        .findOne({email: email})
+        .then(foundUser=>{
+            return foundUser;  
+        })
+        .catch(err=>{
+            console.log(error); 
+        })
+    }
+
     //make a query that retrieves all posts from collection 
     static fetchAllUsers(){
         const db = getDb();
