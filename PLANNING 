@@ -4,3 +4,8 @@ POST:
     -delete 
     -fetch all posts (C)
     -fetch one post (to see more details) (C)
+
+AUTH: 
+    -register 
+    -login
+    -logout 
