@@ -8,11 +8,16 @@ exports.postLogin=(req,res,next)=>{
     const email = req.body.email; 
     const password = req.body.password; 
 
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ error: errors.array()[0].msg });
+    }
+
     User.findUserByEmail(email)
     .then(result=>{
         if(!result){
             return res.status(403).json({
-                message: 'Please enter correct email or password.'
+                error: 'Please enter correct email or password.'
             })
         }
         //user is found, so now compare passwords! 
@@ -24,7 +29,7 @@ exports.postLogin=(req,res,next)=>{
                 })
             } else {
                 return res.status(403).json({
-                    message: 'Please enter correct email or password.'
+                    error: 'Please enter correct email or password.'
                 })
             } 
           });
