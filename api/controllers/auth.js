@@ -1,5 +1,7 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const config = require('../../config'); 
 
 const {validationResult} = require('express-validator'); 
 
@@ -24,8 +26,18 @@ exports.postLogin=(req,res,next)=>{
         bcrypt.compare(password, result.password, function(err, match) {
             if(match) { 
                 // Passwords match
+
+                //auth successful -> create a jwt token!
+                const token = jwt.sign({
+                    email: result.email,
+                    userId: result._id
+                }, config.jwt_privateKey, {
+                    expiresIn: "1h"
+                })
+                
                 return res.status(200).json({
-                    message: 'logged in successful'
+                    message: 'logged in successful',
+                    token: token
                 })
             } else {
                 return res.status(403).json({

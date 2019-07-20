@@ -49,8 +49,6 @@ exports.postPost=(req,res,next)=>{
         throw error; 
     }
 
-    console.log('title is ', req.body.title); 
-
     //audio path is stored in req.file path
     const title = req.body.title;
     const caption = req.body.caption;

@@ -27,7 +27,7 @@ const fileFilter = (req, file, cb)=>{
 
 //use morgan 
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({extended:true})); 
+app.use(bodyParser.urlencoded({extended:false})); 
 app.use(bodyParser.json());
 app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('audio')); //make sure in front end, input name ="audio"
 
