@@ -7,32 +7,15 @@ const config = require('./config');
 
 const app = express();
 const morgan = require('morgan'); 
-//specify the storage yourself! 
-const fileStorage = multer.diskStorage({
-    destination: (req, file, cb)=>{
-        cb(null, 'music-files')
-    },
-    filename: (req,file,cb)=>{
-        cb(null, new Date().toISOString() + '-' + file.originalname) //original name is orginal name of file uploaded 
-    }
-})
-const fileFilter = (req, file, cb)=>{
-    if(file.mimetype === 'audio/mpeg'){
-        cb(null, true)
-    }
-    else{
-        cb(null, false)
-    }
-}
 
 //use morgan 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended:false})); 
 app.use(bodyParser.json());
-app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('audio')); //make sure in front end, input name ="audio"
 
 //handleCORS 
 app.use((req,res,next)=>{
+    console.log('begin is .....', req.body); 
     //attach these headers to all responses 
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With,Content-Type,Accept, Authorization')

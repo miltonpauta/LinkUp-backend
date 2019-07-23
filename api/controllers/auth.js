@@ -37,6 +37,7 @@ exports.postLogin=(req,res,next)=>{
                 
                 return res.status(200).json({
                     message: 'logged in successful',
+                    userId: result._id, 
                     token: token
                 })
             } else {
@@ -73,7 +74,9 @@ exports.postRegister = (req, res, next)=>{
         newUser.save()
         .then(result=>{
             return res.status(200).json({
-                message: 'User created' 
+                message: 'User created'
+                // userId: result._id 
+                // token: token 
             })
         })
         .catch(err=>{

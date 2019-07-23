@@ -43,8 +43,12 @@ exports.getPost=(req,res,next)=>{
 
 //user creates post ******NOTE WHEN MAKING FRONT END, MAKE SURE U CONVERT TITLE AND CAPTION INTO JSON (stringify) ATTACH IT TO THE FORM DATA
 exports.postPost=(req,res,next)=>{
+    console.log('--------------------------------------------------------------------------')
+    console.log('headers are....',JSON.stringify(req.headers));
+    console.log('body is ...',req.body); 
+    console.log('file is .....', req.file); 
     if(!req.file){
-        const error = new Error('No image provided')
+        const error = new Error('No file is provided')
         error.status(422); 
         throw error; 
     }
@@ -56,7 +60,7 @@ exports.postPost=(req,res,next)=>{
 
     //VALIDATION HANDLING WILL EXIST HERE 
 
-    const newPost = new Post(title, caption, audioLink)
+    const newPost = new Post(title, caption, audioLink); 
     newPost.save()
     .then(result=>{
         res.status(201).json({
