@@ -1,10 +1,11 @@
 const Post = require('../models/Post')
 
+const {validationResult} = require('express-validator'); 
+
 //get all posts from database 
 exports.getAllPosts=(req,res,next)=>{
     Post.fetchAllPosts()
     .then(results=>{
-        console.log(results); 
         res.status(200).json({
             message: 'All posts fetched successfully',
             allPosts:results //results is an array of all posts 
@@ -43,14 +44,19 @@ exports.getPost=(req,res,next)=>{
 
 //user creates post ******NOTE WHEN MAKING FRONT END, MAKE SURE U CONVERT TITLE AND CAPTION INTO JSON (stringify) ATTACH IT TO THE FORM DATA
 exports.postPost=(req,res,next)=>{
-    console.log('--------------------------------------------------------------------------')
-    console.log('headers are....',JSON.stringify(req.headers));
-    console.log('body is ...',req.body); 
-    console.log('file is .....', req.file); 
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ error: errors.array()[0].msg });
+    }
+
     if(!req.file){
-        const error = new Error('No file is provided')
-        error.status(422); 
-        throw error; 
+        return res.status(400).json({
+            error: errors.array()[0].msg
+        })
+        // const error = new Error('No file is provided')
+        // error.status(422); 
+        // throw error; 
     }
 
     //audio path is stored in req.file path

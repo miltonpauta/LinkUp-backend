@@ -66,25 +66,37 @@ exports.postRegister = (req, res, next)=>{
 
     const email = req.body.email; 
     const password = req.body.password;
-    
-    //hash the password
-    bcrypt.hash(password, 10, function(err, hashedPassword) {
-        // Store hash in database
-        const newUser = new User(email, hashedPassword); 
-        newUser.save()
-        .then(result=>{
-            return res.status(200).json({
-                message: 'User created'
-                // userId: result._id 
-                // token: token 
+
+    //see if user with this email already exists 
+    User.findUserByEmail(email)
+    .then(result=>{
+        if(result){
+            return res.status(401).json({
+                error: 'User with this email already exists'
             })
-        })
-        .catch(err=>{
-            const error = new Error('Error with creating user.')
-            error.status(400); //see if this correct error code 
-            next(error)
-        })
-    });
+        }
+
+        //continue registering new user 
+
+        //hash the password
+        bcrypt.hash(password, 10, function(err, hashedPassword) {
+            // Store hash in database
+            const newUser = new User(email, hashedPassword); 
+            newUser.save()
+            .then(result=>{
+                return res.status(200).json({
+                    message: 'User created'
+                    // userId: result._id 
+                    // token: token 
+                })
+            })
+        });
+    })
+    .catch(err=>{
+        const error = new Error('Error with creating user.')
+        error.status(400); //see if this correct error code 
+        next(error)
+    })
 }
 
 exports.postLogout = (req, res, next)=>{

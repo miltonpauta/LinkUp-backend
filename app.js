@@ -15,7 +15,6 @@ app.use(bodyParser.json());
 
 //handleCORS 
 app.use((req,res,next)=>{
-    console.log('begin is .....', req.body); 
     //attach these headers to all responses 
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With,Content-Type,Accept, Authorization')
