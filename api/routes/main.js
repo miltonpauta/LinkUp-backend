@@ -27,7 +27,7 @@ const fileFilter = (req, file, cb)=>{
     }
     else{
         cb(null, false)
-        cb(new Error('file not accepted by multer'))
+        cb(new Error('file not accepted by multer')) //ends up passing error message to front end 
     }
 }
 

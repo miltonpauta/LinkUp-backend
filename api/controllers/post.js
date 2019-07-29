@@ -60,13 +60,14 @@ exports.postPost=(req,res,next)=>{
     }
 
     //audio path is stored in req.file path
+    const userId = req.body.userId; //remember, if userID is null, then you cant create this post 
     const title = req.body.title;
     const caption = req.body.caption;
     const audioLink = req.file.path;  
 
     //VALIDATION HANDLING WILL EXIST HERE 
 
-    const newPost = new Post(title, caption, audioLink); 
+    const newPost = new Post(title, caption, audioLink,userId); 
     newPost.save()
     .then(result=>{
         res.status(201).json({

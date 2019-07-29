@@ -56,7 +56,6 @@ exports.postLogin=(req,res,next)=>{
 }
 
 
-//TODO: hash the passwords!
 exports.postRegister = (req, res, next)=>{
     //get validation error 
     const errors = validationResult(req);
