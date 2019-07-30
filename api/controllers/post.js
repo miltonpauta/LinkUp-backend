@@ -1,4 +1,5 @@
 const Post = require('../models/Post')
+const User = require('../models/User'); 
 
 const {validationResult} = require('express-validator'); 
 
@@ -65,18 +66,31 @@ exports.postPost=(req,res,next)=>{
     const caption = req.body.caption;
     const audioLink = req.file.path;  
 
-    //VALIDATION HANDLING WILL EXIST HERE 
-
-    const newPost = new Post(title, caption, audioLink,userId); 
-    newPost.save()
+    //find first and last name of current session user to add to post 
+    User.findUserById(userId)
     .then(result=>{
-        res.status(201).json({
-            message: 'item is created and stored in the database',
-            item: result
+        if(!result){
+            console.log('someshit happened, user should be retrieved idk man ...')
+        }
+
+        // name of post creator 
+        const firstName = result.firstName;
+        const lastName = result.lastName; 
+        const fullName = firstName + " " + lastName; 
+
+        //VALIDATION HANDLING WILL EXIST HERE 
+
+        const newPost = new Post(title, caption, audioLink,userId, fullName); 
+        newPost.save()
+        .then(result=>{
+            res.status(201).json({
+                message: 'item is created and stored in the database',
+                item: result
+            })
         })
     })
     .catch(err=>{ //find out how to extract message from this 'err' object 
-        const error = new Error('Error with saving item into database')
+        const error = new Error('Server side problem.')
         error.status(404); 
         next(error)
     })

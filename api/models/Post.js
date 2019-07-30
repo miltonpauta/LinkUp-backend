@@ -3,12 +3,13 @@ const mongo = require('mongodb')
 
 class Post {
     //add file next, userID will be added last 
-    constructor(title,caption, audioLink,userId){
+    constructor(title,caption, audioLink,userId, creatorName){
         this.title = title; 
         this.caption = caption;  
         this.audioSrc = audioLink; 
         this.timeCreated = new Date().toLocaleTimeString(); 
         this.userId = new mongo.ObjectId(userId); 
+        this.creatorName = creatorName; 
     }
 
     save(){
