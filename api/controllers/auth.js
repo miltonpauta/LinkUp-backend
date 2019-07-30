@@ -65,6 +65,8 @@ exports.postRegister = (req, res, next)=>{
 
     const email = req.body.email; 
     const password = req.body.password;
+    const firstName = req.body.firstName; 
+    const lastName = req.body.lastName; 
 
     //see if user with this email already exists 
     User.findUserByEmail(email)
@@ -80,7 +82,7 @@ exports.postRegister = (req, res, next)=>{
         //hash the password
         bcrypt.hash(password, 10, function(err, hashedPassword) {
             // Store hash in database
-            const newUser = new User(email, hashedPassword); 
+            const newUser = new User(email, hashedPassword, firstName, lastName); 
             newUser.save()
             .then(result=>{
                 return res.status(200).json({

@@ -3,9 +3,11 @@ const mongo = require('mongodb')
 
 class User {
     //add file next, userID will be added last 
-    constructor(email,password){
+    constructor(email,password, firstName, lastName){
         this.email = email; 
         this.password = password; 
+        this.firstName = firstName;
+        this.lastName = lastName; 
     }
 
     save(){
