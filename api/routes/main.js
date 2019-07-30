@@ -52,7 +52,13 @@ router.post('/create',
 //get single post 
 router.get('/:postId', PostController.getPost)
 
+//get all posts belonging to single user 
+router.get('/myPosts/:userId', PostController.fetchCurrentUserPosts); 
+
 //edit a single post 
 router.patch('/:postId', isAuth, PostController.editPost) 
 
 module.exports = router; 
+
+
+//IMPORTANT: when completing majority of project, add isAuth to all these routes and compliment this in front end

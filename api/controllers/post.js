@@ -108,3 +108,21 @@ exports.editPost=(req,res,next)=>{
     //Step 6: delete current item in db and insert this, OR do a update query with all values in it  
 
 }
+
+exports.fetchCurrentUserPosts=(req,res,next)=>{
+    const userId = req.params.userId; 
+
+    //get all posts beloning to current session user 
+    Post.fetchPostsByUserId(userId)
+    .then(results=>{
+        res.status(200).json({
+            message: `all posts belonging to ${userId} have been found`,
+            posts:results //results is an array of all posts 
+        })
+    })
+    .catch(err=>{
+        const error = new Error('Error with retriving users posts from database.')
+        error.status(404); 
+        next(error)
+    })
+}

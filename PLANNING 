@@ -1,11 +1,5 @@
-POST: 
-    -create (C)
-    -edit
-    -delete 
-    -fetch all posts (C)
-    -fetch one post (to see more details) (C)
+SHIT TO DO :
 
-AUTH: 
-    -register 
-    -login
-    -logout 
+FRONTEND: create page "your songs" that displays posts belonging to current session user (userId)
+
+BACKEND: compliment above ^ 
