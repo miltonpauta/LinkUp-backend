@@ -46,6 +46,19 @@ class Post {
         })
     }
 
+    static fetchPostsByUserId(userId){
+        const db = getDb();
+        return db.collection('posts').find({userId: new mongo.ObjectId(userId)})
+        .toArray()
+        .then(posts=>{
+            return posts;
+        })
+        .catch(err=>{
+            console.log(err); 
+        })
+
+    }
+
 }
 
 module.exports = Post; 
