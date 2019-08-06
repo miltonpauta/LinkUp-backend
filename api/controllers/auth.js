@@ -38,7 +38,8 @@ exports.postLogin=(req,res,next)=>{
                 return res.status(200).json({
                     message: 'logged in successful',
                     userId: result._id, 
-                    token: token
+                    token: token,
+                    user: result
                 })
             } else {
                 return res.status(403).json({

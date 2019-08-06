@@ -36,7 +36,7 @@ router.get('/',PostController.getAllPosts);
 
 //TODO: fix validation, not working for this! 
 //create post 
-router.post('/create', 
+router.post('/create',isAuth, 
     // [
     //     body('title')
     //     .isLength({ min: 5 }).withMessage('title must be at least 5 characters long')
@@ -57,6 +57,9 @@ router.get('/myPosts/:userId', PostController.fetchCurrentUserPosts);
 
 //edit a single post 
 router.patch('/:postId', isAuth, PostController.editPost) 
+
+// should I pass the user id back to server too? 
+router.delete('/myPosts/:postId')
 
 module.exports = router; 
 
