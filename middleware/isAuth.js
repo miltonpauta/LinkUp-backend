@@ -3,25 +3,30 @@ const jwt = require('jsonwebtoken');
 const config = require('../config'); 
 
 module.exports = (req,res,next)=>{
-    console.log('this is hit')
+    const authHeader = req.get('Authorization');
+    
+    if(!authHeader){
+        const error = new Error('Authentication failed')
+        error.status = 400;
+        throw error; 
+    }
     const token = req.get('Authorization').split(' ')[1];
-    console.log('token is', token)
     let decoded;
     try{
         decoded = jwt.verify(token, config.jwt_privateKey);
     }catch(error){
-        return res.status(500).json({
-            message: 'Auth failed'
-        })
+        error.status = 500;
+        throw error; 
     }
 
     if(!decoded){
-        return res.status(500).json({
-            message: 'Auth failed'
-        })
+        const error = new Error('Authentication failed')
+        error.status = 400;
+        throw error; 
     }
 
     //user id decrypted from token will be stored here! 
     req.userId = decoded.userId; 
+    console.log('----------Authentication Successful---------'); 
     next();  
 }

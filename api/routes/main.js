@@ -20,7 +20,7 @@ const fileStorage = multer.diskStorage({
     }
 })
 const fileFilter = (req, file, cb)=>{
-    console.log('shit is', file);
+    console.log('file is ... ', file);
     if(file.mimetype === 'audio/mpeg' || file.mimetype === 'audio/mp3'){
         console.log('file accepted by filter'); 
         cb(null, true)
