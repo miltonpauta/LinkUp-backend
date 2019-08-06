@@ -34,6 +34,9 @@ const fileFilter = (req, file, cb)=>{
 //get all posts (main page)
 router.get('/',PostController.getAllPosts); 
 
+//get all posts belonging to single user 
+router.get('/myPosts',isAuth, PostController.fetchCurrentUserPosts); 
+
 //TODO: fix validation, not working for this! 
 //create post 
 router.post('/create',isAuth, 
@@ -47,13 +50,10 @@ router.post('/create',isAuth,
 
     // ],
     multer({storage: fileStorage, fileFilter: fileFilter}).single('audio')
-,PostController.postPost)
+,PostController.postPost); 
 
 //get single post 
-router.get('/:postId', PostController.getPost)
-
-//get all posts belonging to single user 
-router.get('/myPosts/:userId', PostController.fetchCurrentUserPosts); 
+router.get('/:postId', isAuth, PostController.getPost); 
 
 //edit a single post 
 router.patch('/:postId', isAuth, PostController.editPost) 

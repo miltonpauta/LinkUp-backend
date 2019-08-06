@@ -43,7 +43,7 @@ exports.getPost=(req,res,next)=>{
     })
 }
 
-//user creates post ******NOTE WHEN MAKING FRONT END, MAKE SURE U CONVERT TITLE AND CAPTION INTO JSON (stringify) ATTACH IT TO THE FORM DATA
+//user creates post 
 exports.postPost=(req,res,next)=>{
 
     const errors = validationResult(req);
@@ -55,9 +55,6 @@ exports.postPost=(req,res,next)=>{
         return res.status(400).json({
             error: errors.array()[0].msg
         })
-        // const error = new Error('No file is provided')
-        // error.status(422); 
-        // throw error; 
     }
 
     //audio path is stored in req.file path
@@ -110,7 +107,7 @@ exports.editPost=(req,res,next)=>{
 }
 
 exports.fetchCurrentUserPosts=(req,res,next)=>{
-    const userId = req.params.userId; 
+    const userId = req.userId; 
 
     //get all posts beloning to current session user 
     Post.fetchPostsByUserId(userId)
@@ -126,3 +123,4 @@ exports.fetchCurrentUserPosts=(req,res,next)=>{
         next(error)
     })
 }
+

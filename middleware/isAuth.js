@@ -6,6 +6,7 @@ module.exports = (req,res,next)=>{
     const authHeader = req.get('Authorization');
     
     if(!authHeader){
+        console.log('error')
         const error = new Error('Authentication failed')
         error.status = 400;
         throw error; 
@@ -15,11 +16,13 @@ module.exports = (req,res,next)=>{
     try{
         decoded = jwt.verify(token, config.jwt_privateKey);
     }catch(error){
+        console.log('error')
         error.status = 500;
         throw error; 
     }
 
     if(!decoded){
+        console.log('error')
         const error = new Error('Authentication failed')
         error.status = 400;
         throw error; 
@@ -27,6 +30,7 @@ module.exports = (req,res,next)=>{
 
     //user id decrypted from token will be stored here! 
     req.userId = decoded.userId; 
+    console.log('this is hit')
     console.log('----------Authentication Successful---------'); 
     next();  
 }
