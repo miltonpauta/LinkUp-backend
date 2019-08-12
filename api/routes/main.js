@@ -59,6 +59,6 @@ router.get('/post/:postId',isAuth, PostController.getPost);
 router.patch('/post/:postId', isAuth, PostController.editPost) 
 
 // delete post
-router.delete('/post/:postId', PostController.deletePost); 
+router.delete('/post/:postId', isAuth, PostController.deletePost); 
 
 module.exports = router; 

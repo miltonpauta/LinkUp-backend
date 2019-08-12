@@ -135,9 +135,13 @@ exports.deletePost=(req,res,next)=>{
             error.status = 404;
             throw error; 
         }
+        
         //see if this post belongs to current user! 
-
-        //for now, just delete it, will use isAuth later! 
+        if(post.userId !== req.userId){
+            const error = new Error('You are not allowed to delete this post')
+            error.status = 400;
+            throw error; 
+        } 
 
         FileHelper.deleteFile(post.audioSrc); 
 
