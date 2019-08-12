@@ -6,6 +6,7 @@ module.exports = (req,res,next)=>{
     const authHeader = req.get('Authorization');
     
     if(!authHeader){
+        console.log('----------Authentication Failed---------'); 
         const error = new Error('Authentication failed')
         error.status = 400;
         throw error; 
@@ -29,7 +30,6 @@ module.exports = (req,res,next)=>{
 
     //user id decrypted from token will be stored here! 
     req.userId = decoded.userId; 
-    console.log('this is hit')
     console.log('----------Authentication Successful---------'); 
     next();  
 }

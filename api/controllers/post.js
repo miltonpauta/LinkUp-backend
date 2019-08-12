@@ -127,6 +127,7 @@ exports.fetchCurrentUserPosts=(req,res,next)=>{
 
 exports.deletePost=(req,res,next)=>{
     const postId = req.params.postId; 
+    console.log(postId); 
 
     Post.findById(postId)
     .then(post=>{
@@ -135,9 +136,9 @@ exports.deletePost=(req,res,next)=>{
             error.status = 404;
             throw error; 
         }
-        
-        //see if this post belongs to current user! 
-        if(post.userId !== req.userId){
+
+        if(post.userId != req.userId){
+            console.log('current user is not allowed to delete this item'); 
             const error = new Error('You are not allowed to delete this post')
             error.status = 400;
             throw error; 
@@ -149,6 +150,7 @@ exports.deletePost=(req,res,next)=>{
     })
     .then(result=>{
         //send success message to front end! 
+        console.log('edeuebdubed yeay ')
         res.status(200).json({
             message: 'Success!'
         })

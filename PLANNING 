@@ -1,9 +1,7 @@
 SHIT TO DO :
 
-FRONTEND: make sure list reacts to deleted product, list is re-rendered on screen! 
+FRONTEND: 
 
-
-
-BACKEND: Work on delete functionality in backend, 
-        make sure only authenticated (works) AND owner can delete this! 
+BACKEND: 
+        
         
