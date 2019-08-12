@@ -23,10 +23,9 @@ class Post {
     static findById(id){
         const db = getDb();
         return db.collection('posts')
-        .find({_id: new mongo.ObjectId(id)})
-        .next()
-        .then(foundUser=>{
-            return foundUser; 
+        .findOne({_id: new mongo.ObjectId(id)})
+        .then(foundPost=>{
+            return foundPost; 
         })
         .catch(err=>{
             console.log(err);  
@@ -52,6 +51,18 @@ class Post {
         .toArray()
         .then(posts=>{
             return posts;
+        })
+        .catch(err=>{
+            console.log(err); 
+        })
+
+    }
+
+    static deletePostById(postId){
+        const db = getDb();
+        return db.collection('posts').deleteOne({_id: new mongo.ObjectId(postId)})
+        .then(result=>{
+            console.log('item deleted from database')
         })
         .catch(err=>{
             console.log(err); 

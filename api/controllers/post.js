@@ -1,5 +1,6 @@
 const Post = require('../models/Post')
 const User = require('../models/User'); 
+const FileHelper = require('../../utils/file')
 
 const {validationResult} = require('express-validator'); 
 
@@ -121,6 +122,37 @@ exports.fetchCurrentUserPosts=(req,res,next)=>{
         const error = new Error('Error with retriving users posts from database.')
         error.status(404); 
         next(error)
+    })
+}
+
+exports.deletePost=(req,res,next)=>{
+    const postId = req.params.postId; 
+
+    Post.findById(postId)
+    .then(post=>{
+        if(!post){
+            const error = new Error('Could not find Post.')
+            error.status = 404;
+            throw error; 
+        }
+        //see if this post belongs to current user! 
+
+        //for now, just delete it, will use isAuth later! 
+
+        FileHelper.deleteFile(post.audioSrc); 
+
+        return Post.deletePostById(postId) 
+    })
+    .then(result=>{
+        //send success message to front end! 
+        res.status(200).json({
+            message: 'Success!'
+        })
+    })
+    .catch(err=>{
+        res.status(500).json({
+            message: 'deleting product failed'
+        }); 
     })
 }
 

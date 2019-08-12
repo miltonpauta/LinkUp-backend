@@ -1,9 +1,9 @@
 SHIT TO DO :
 
-FRONTEND: allow user to delete their post, mp3 file should be deleted in storage too 
-                -step 1: make delete button (a component!) on posts , id must be passed thru params! 
-                -step 2: make sure only owner can delete it 
+FRONTEND: 
 
 
 
-BACKEND: compliment this^
+BACKEND: Work on delete functionality in backend, 
+        make sure it deletes file in local file storage and from db (db shit not done yet)
+        

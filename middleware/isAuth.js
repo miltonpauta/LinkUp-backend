@@ -6,7 +6,6 @@ module.exports = (req,res,next)=>{
     const authHeader = req.get('Authorization');
     
     if(!authHeader){
-        console.log('error')
         const error = new Error('Authentication failed')
         error.status = 400;
         throw error; 

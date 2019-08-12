@@ -37,9 +37,9 @@ router.get('/',PostController.getAllPosts);
 //get all posts belonging to single user 
 router.get('/myPosts',isAuth, PostController.fetchCurrentUserPosts); 
 
-//TODO: fix validation, not working for this! 
+//TODO: fix validation, not working for this! Add isAuth later! 
 //create post 
-router.post('/create',isAuth, 
+router.post('/create', 
     // [
     //     body('title')
     //     .isLength({ min: 5 }).withMessage('title must be at least 5 characters long')
@@ -53,15 +53,12 @@ router.post('/create',isAuth,
 ,PostController.postPost); 
 
 //get single post 
-router.get('/:postId', isAuth, PostController.getPost); 
+router.get('/post/:postId',isAuth, PostController.getPost); 
 
 //edit a single post 
-router.patch('/:postId', isAuth, PostController.editPost) 
+router.patch('/post/:postId', isAuth, PostController.editPost) 
 
-// should I pass the user id back to server too? 
-router.delete('/myPosts/:postId')
+// delete post
+router.delete('/post/:postId', PostController.deletePost); 
 
 module.exports = router; 
-
-
-//IMPORTANT: when completing majority of project, add isAuth to all these routes and compliment this in front end
