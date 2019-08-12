@@ -37,7 +37,6 @@ router.get('/',PostController.getAllPosts);
 //get all posts belonging to single user 
 router.get('/myPosts',isAuth, PostController.fetchCurrentUserPosts); 
 
-
 //TODO: fix validation, not working for this! Add isAuth later! 
 //create post 
 router.post('/create', 

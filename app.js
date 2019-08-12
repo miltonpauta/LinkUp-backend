@@ -28,11 +28,12 @@ app.use((req,res,next)=>{
 //import routes
 const HomepageRoutes = require('./api/routes/main');
 const AuthRoutes = require('./api/routes/auth'); 
+const RequestRoutes = require('./api/routes/request'); 
 
 app.use('/posts', HomepageRoutes); 
-
-//will work on these later! get all other routes working 
+app.use('/requests', RequestRoutes); 
 app.use(AuthRoutes); 
+
 
 //catch all errors that head to unexisting routes 
 app.use((req, res, next)=>{
