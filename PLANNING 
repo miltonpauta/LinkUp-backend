@@ -2,14 +2,17 @@ SHIT TO DO :
 
     FRONTEND: 
 
-    BACKEND: add stats field for posts model, make request model, and like model 
+    BACKEND: 
+        add stats field for posts model, (currently working on)
+        make request model, 
+        and like model 
             
     PLANNING: 
         {
             post:{
                 stats:{
-                    likes[like._id, like._id, ...]
-                    requests[req_id, req._id, req._id, ...]
+                    likes: 0
+                    requests: 0 
                 }
             }
 

@@ -134,14 +134,14 @@ exports.deletePost=(req,res,next)=>{
         if(!post){
             const error = new Error('Could not find Post.')
             error.status = 404;
-            throw error; 
+            return next(error); 
         }
 
         if(post.userId != req.userId){
             console.log('current user is not allowed to delete this item'); 
             const error = new Error('You are not allowed to delete this post')
             error.status = 400;
-            throw error; 
+            return next(error); 
         } 
 
         FileHelper.deleteFile(post.audioSrc); 
